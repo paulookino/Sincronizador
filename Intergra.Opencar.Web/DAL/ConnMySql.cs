@@ -29,15 +29,21 @@ namespace Intergra.Opencar.Web.DAL
         //Initialize values
         private void Initialize()
         {
-            //server = "mysql5018.site4now.net"; //208.91.199.145
-            //database = "db_a1938f_loja_1";
-            //uid = "a1938f_loja_1";
-            //password = "4rtr4x2308";
 
-            server = "208.91.199.145";
-            database = "drogaria_ocar121";
-            uid = "drogaria_ocar121";
-            password = "9!vS5(6Sp3";
+            //Base de Desenvolvimento
+            server = "mysql5018.site4now.net"; //208.91.199.145
+            database = "db_a1938f_loja_1";
+            uid = "a1938f_loja_1";
+            password = "4rtr4x2308";
+
+            //server = "208.91.199.145";
+            //database = "drogaria_ocar121";
+            //uid = "drogaria_ocar121";
+            //password = "9!vS5(6Sp3";
+
+
+            
+
 
             string connectionString;
 

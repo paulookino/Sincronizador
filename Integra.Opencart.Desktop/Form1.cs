@@ -74,6 +74,23 @@ namespace Integra.Opencart.Desktop
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
+            backgroundWorker1.WorkerSupportsCancellation = true;
+            
+
+            this.Invoke((MethodInvoker)delegate ()
+            {
+
+
+                progressBar1.Minimum = 0;
+                progressBar1.Maximum = 100;
+
+                progressBar1.Value = 1;
+
+
+
+            });
+
+
             var TblPMySql = new DataTable(); // mysql
             TblPMySql.Columns.Add("product_id", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
             TblPMySql.Columns.Add("model", typeof(string)); //64) NOT NULL,
@@ -127,11 +144,27 @@ namespace Integra.Opencart.Desktop
             string PSql = " SELECT * from web.prd_cad where uad = 1 order by descricao limit 10";
 
 
+            this.Invoke((MethodInvoker)delegate ()
+            {
+
+
+                progressBar1.Value += 5;
+
+            });
+
             // populando os Datatables
             //Thread th = new Thread(new ThreadStart(this.Thread_Segura));
             //th.Start();
             valorgeral = "Carregando dados de produtos Opencart..";
 
+            
+            this.Invoke((MethodInvoker)delegate ()
+            {
+
+
+                Lista.Items.Add(valorgeral);
+
+            });
 
             TblPMySql = DadosMysql.RetornaDados("SELECT * FROM occe_product  limit 10");
 
@@ -156,9 +189,6 @@ namespace Integra.Opencart.Desktop
             UlID++;
             UlIP++;
 
-
-            
-
             List<DataRow> ListM = TblPMySql.AsEnumerable().ToList();
             List<DataRow> ListP = TblPostrgres.AsEnumerable().ToList();
             List<DataRow> ListMD = TblMySqlDepto.AsEnumerable().ToList();
@@ -178,15 +208,13 @@ namespace Integra.Opencart.Desktop
             DataTable tbDeptosEncontrados = new DataTable();
             DataTable tbDeptosNovos = new DataTable();
             tbDeptosNovos.Columns.Add("Registros", typeof(String));
-
             
-
-
 
             total = 0;
 
             foreach (var l_adDeptoRow in l_adDeptoRows)
             {
+
                 ean = l_adDeptoRow["cod"].ToString();
                 descricao = l_adDeptoRow["sec"].ToString();
                 descricao = descricao.Replace("'", "");
@@ -205,6 +233,9 @@ namespace Integra.Opencart.Desktop
                     Mdescricao = dr["name"].ToString();
                     Mean = dr["category_id"].ToString();
                 }
+
+
+                
 
                 Registros = rows.Length;
                 string num = Registros.ToString();
@@ -230,7 +261,17 @@ namespace Integra.Opencart.Desktop
                 valorgeral = total.ToString();
 
                 
+
+
             }
+
+            this.Invoke((MethodInvoker)delegate ()
+            {
+
+
+                progressBar1.Value += 10;
+
+            });
 
             var TblDeptoMySqlKeys2 = TblMySqlDepto.Select().Select((r) => (string)r["category_id"]);
             var l_adDeptoRows2 = TblMySqlDepto.Select().Select((r) => !TblDeptoMySqlKeys.Contains((string)r["sec"]));
@@ -304,8 +345,16 @@ namespace Integra.Opencart.Desktop
             tbDadosNovos.Columns.Add("Registros", typeof(String));
 
             total = 0;
+
+            this.Invoke((MethodInvoker)delegate ()
+            {
+                progressBar1.Value += 19;
+
+            });
             foreach (var l_addedRow in l_addedRows)
             {
+
+                
 
                 descricao = l_addedRow["descricao"].ToString();
                 ean = l_addedRow["barras"].ToString();
@@ -325,6 +374,7 @@ namespace Integra.Opencart.Desktop
                     Mean = dr["ean"].ToString();
                     Mquantidade = dr["quantity"].ToString();
                 }
+
 
                 Registros = rows.Length;
                 string num = Registros.ToString();
@@ -378,7 +428,6 @@ namespace Integra.Opencart.Desktop
                 }
                 total++;
                 valorgeral = total.ToString();
-
                 
                 //   progressBar1.Step = total;
             }
@@ -398,10 +447,10 @@ namespace Integra.Opencart.Desktop
             var l_iguaisRows = TblPostrgres.Select().Where((r) => TblIMySqlKeys.Contains((string)r["barras"]));
 
 
-            this.Invoke((MethodInvoker)delegate ()
-            {
-                progressBar1.Maximum = l_iguaisRows.Count();
-            });
+            //this.Invoke((MethodInvoker)delegate ()
+            //{
+            //    progressBar1.Maximum = l_iguaisRows.Count();
+            //});
             
             //progressBar1.Minimum = 0;
 
@@ -410,6 +459,16 @@ namespace Integra.Opencart.Desktop
 
             total = 0;
             valorgeral = total.ToString();
+
+
+            this.Invoke((MethodInvoker)delegate ()
+            {
+
+
+                progressBar1.Value += 5;
+
+            });
+
 
             foreach (var l_igualRow in l_iguaisRows)
             {
@@ -465,6 +524,16 @@ namespace Integra.Opencart.Desktop
                 //  progressBar1.Step = total;
             }
 
+
+            this.Invoke((MethodInvoker)delegate ()
+            {
+
+
+                progressBar1.Value += 10;
+
+            });
+
+
             //GridView2.DataSource = tbDadosIguais;
             //GridView2.DataBind();
             ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -474,10 +543,10 @@ namespace Integra.Opencart.Desktop
             var TblPMySqlKeys = TblPostrgres.Select().Select((r) => (string)r["barras"]);
             var l_deletedRows = TblPMySql.Select().Where((r) => !TblPMySqlKeys.Contains((string)r["ean"]));
 
-            this.Invoke((MethodInvoker)delegate ()
-            {
-                progressBar1.Maximum = l_deletedRows.Count();
-            });
+            //this.Invoke((MethodInvoker)delegate ()
+            //{
+            //    progressBar1.Maximum = l_deletedRows.Count();
+            //});
 
             
             //progressBar1.Minimum = 0;
@@ -487,6 +556,15 @@ namespace Integra.Opencart.Desktop
             tbDadosExcluidos.Columns.Add("Registros", typeof(String));
 
             total = 0;
+
+            this.Invoke((MethodInvoker)delegate ()
+            {
+
+
+                progressBar1.Value += 25;
+
+            });
+
             foreach (var l_deletedRow in l_deletedRows)
             {
                 var ean = l_deletedRow["ean"].ToString();
@@ -515,14 +593,15 @@ namespace Integra.Opencart.Desktop
                 total++;
                 valorgeral = total.ToString();
 
-                this.Invoke((MethodInvoker)delegate ()
-                {
-                    progressBar1.Step = total;
-                });
+                //this.Invoke((MethodInvoker)delegate ()
+                //{
+                //    progressBar1.Step = total;
+                //});
 
                 
             }
 
+            
             //GridView1.DataSource = tbDadosExcluidos;
             //GridView1.DataBind();
 
@@ -563,18 +642,29 @@ namespace Integra.Opencart.Desktop
                 });
             }
 
+            this.Invoke((MethodInvoker)delegate ()
+            {
+
+
+                progressBar1.Value += 25;
+
+
+                progressBar1.Refresh();
+            });
+
 
             this.Invoke((MethodInvoker)delegate ()
             {
                 label2.Text = "ATUALIZAÇÃO DAS " + lblHora.Text + " FINALIXADA..";
+                btnIniciarProcesso.Enabled = true;
             });
             
             //GridView3.DataSource = tbDadosModificados2;
             //GridView3.DataBind();
 
             TimerInicio.Enabled = true;
-
             
+
         }
 
         public Form1()
@@ -614,9 +704,14 @@ namespace Integra.Opencart.Desktop
             }
         }
 
-        private void btnAtualizaDados_Click(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
-            // AtualizaDados();
+            if (backgroundWorker1.IsBusy)
+            {
+
+
+                Environment.Exit(1);
+            }
         }
 
         private void TimerInicio_Tick(object sender, EventArgs e)
@@ -628,17 +723,28 @@ namespace Integra.Opencart.Desktop
             // AtualizaDados();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnIniciarProcesso_Click(object sender, EventArgs e)
         {
+
+
+
+            btnIniciarProcesso.Enabled = false;
+            // wait cursor
+            Cursor.Current = Cursors.WaitCursor;
             backgroundWorker1.RunWorkerAsync();
+
+            
         }
+
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+
+
             label4.Text = valorgeral;
             Lista.Items.Add(valorgeral);
             label4.Refresh();
-            progressBar1.Step = total;
-            progressBar1.Refresh();
+            //progressBar1.Step = total;
+            //progressBar1.Refresh();
 
         }
 

@@ -33,8 +33,8 @@
             this.Lista = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.btnAtualizaDados = new System.Windows.Forms.Button();
+            this.btnIniciarProcesso = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -51,7 +51,7 @@
             // 
             this.Lista.FormattingEnabled = true;
             this.Lista.Location = new System.Drawing.Point(17, 8);
-            this.Lista.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Lista.Margin = new System.Windows.Forms.Padding(2);
             this.Lista.Name = "Lista";
             this.Lista.ScrollAlwaysVisible = true;
             this.Lista.Size = new System.Drawing.Size(557, 212);
@@ -60,12 +60,12 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.button3);
-            this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Controls.Add(this.btnAtualizaDados);
+            this.groupBox1.Controls.Add(this.btnIniciarProcesso);
+            this.groupBox1.Controls.Add(this.btnCancelar);
             this.groupBox1.Location = new System.Drawing.Point(17, 295);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(555, 61);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
@@ -74,7 +74,7 @@
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(481, 16);
-            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(50, 15);
             this.button3.TabIndex = 2;
@@ -82,27 +82,27 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // button2
+            // btnIniciarProcesso
             // 
-            this.button2.Location = new System.Drawing.Point(291, 16);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(98, 31);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnIniciarProcesso.Location = new System.Drawing.Point(120, 17);
+            this.btnIniciarProcesso.Margin = new System.Windows.Forms.Padding(2);
+            this.btnIniciarProcesso.Name = "btnIniciarProcesso";
+            this.btnIniciarProcesso.Size = new System.Drawing.Size(98, 31);
+            this.btnIniciarProcesso.TabIndex = 1;
+            this.btnIniciarProcesso.Text = "Iniciar";
+            this.btnIniciarProcesso.UseVisualStyleBackColor = true;
+            this.btnIniciarProcesso.Click += new System.EventHandler(this.btnIniciarProcesso_Click);
             // 
-            // btnAtualizaDados
+            // btnCancelar
             // 
-            this.btnAtualizaDados.Location = new System.Drawing.Point(133, 16);
-            this.btnAtualizaDados.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.btnAtualizaDados.Name = "btnAtualizaDados";
-            this.btnAtualizaDados.Size = new System.Drawing.Size(79, 31);
-            this.btnAtualizaDados.TabIndex = 0;
-            this.btnAtualizaDados.Text = "Iniciar";
-            this.btnAtualizaDados.UseVisualStyleBackColor = true;
-            this.btnAtualizaDados.Click += new System.EventHandler(this.btnAtualizaDados_Click);
+            this.btnCancelar.Location = new System.Drawing.Point(301, 16);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(79, 31);
+            this.btnCancelar.TabIndex = 0;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // label1
             // 
@@ -154,7 +154,7 @@
             // progressBar1
             // 
             this.progressBar1.Location = new System.Drawing.Point(21, 222);
-            this.progressBar1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(2);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(551, 15);
             this.progressBar1.Step = 1;
@@ -189,6 +189,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(589, 375);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -200,7 +201,8 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Lista);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Atualiza Opencart";
             this.groupBox1.ResumeLayout(false);
@@ -213,14 +215,14 @@
 
         private System.Windows.Forms.ListBox Lista;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnAtualizaDados;
+        private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblHora;
         private System.Windows.Forms.Timer TimerInicio;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnIniciarProcesso;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;

@@ -253,11 +253,15 @@ namespace Integra.Opencart.Desktop
 
                     DadosMysql.CloseConnection();
 
+                    
+
                     if (Registros == 0)
                     {
                         // DadosMysql.CloseConnection();
 
                         //DadosMysql.Insert("INSERT INTO occe_category_description(category_id,language_id, name) VALUES ('" + UlID.ToString() + "','1', '" + descricao.Trim() + "'); ");
+
+
                         DadosMysql.Insert("INSERT INTO oc_category_description(category_id,language_id, name) VALUES ('" + UlID.ToString() + "','1', '" + descricao.Trim() + "'); ");
 
                         var Linha = "Novo Depto. Adicionado: " + l_adDeptoRow["cod"].ToString() + " - " + l_adDeptoRow["sec"].ToString();
@@ -325,12 +329,16 @@ namespace Integra.Opencart.Desktop
 
                     DadosMysql.CloseConnection();
 
+
+                    
                     if (Registros == 0)
                     {
                         // DadosMysql.CloseConnection();
                         var Linha = "Novo Depto. Adicionado: " + l_adDeptoRow["cod"].ToString() + " - " + l_adDeptoRow["sec"].ToString();
-                        //DadosMysql.Insert("INSERT INTO occe_category(`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES ('" + UlID.ToString() + "','catalog/DEPARTAMENTOS/DNW_HIGB_00.png','0','3','3','1','2017-12-11 19:48:07','2017-12-11 19:48:07'); ");
-                        DadosMysql.Insert("INSERT INTO oc_category(`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES ('" + UlID.ToString() + "','catalog/DEPARTAMENTOS/DNW_HIGB_00.png','0','3','3','1','2017-12-11 19:48:07','2017-12-11 19:48:07'); ");
+                        //DadosMysql.Insert("INSERT INTO occe_category(`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) " + "VALUES ('" + UlID.ToString() + "','catalog/DEPARTAMENTOS/DNW_HIGB_00.png', '1', '0','3','3','1','2017-12-11 19:48:07','2017-12-11 19:48:07'); ");
+
+                        DadosMysql.Insert("INSERT INTO oc_category(`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) " + "VALUES ('" + UlID.ToString() + "','catalog/DEPARTAMENTOS/DNW_HIGB_00.png', '1', '0','3','3','1','2017-12-11 19:48:07','2017-12-11 19:48:07'); ");
+
                         tbDeptosNovos.Rows.Add(Linha);
                         this.Invoke((MethodInvoker)delegate ()
                         {
@@ -405,9 +413,9 @@ namespace Integra.Opencart.Desktop
                         if (Mdescricao != descricao || Mvalor != valor || Mean != ean || Mquantidade != quantidade)
                         {
                             DadosMysql.CloseConnection();
-                            //DadosMysql.Insert("update occe_product set model = '" + descricao + "', quantity = '" + quantidade + "', date_modified = '" + DateTime.Now.ToString() +  "' +  where ean = '" + ean +"");
+                            //DadosMysql.Insert("update occe_product set model = '" + descricao + "', quantity = '" + quantidade + "', date_modified = '" + DateTime.Now.ToString() + "'  where ean =  '" + ean + "'");
 
-                            DadosMysql.Insert("update oc_product set model = '" + descricao + "', quantity = '" + quantidade + "', date_modified = '" + DateTime.Now.ToString() + "' +  where ean = '" + ean + "");
+                            DadosMysql.Insert("update oc_product set model = '" + descricao + "', quantity = '" + quantidade + "', date_modified = '" + DateTime.Now.ToString() + "'  where ean =  '" + ean + "'");
                             var Linha = "Produto Atualizado: " + ean + " - " + descricao + " ";
                             tbDadosNovos.Rows.Add(Linha);
 
@@ -434,16 +442,16 @@ namespace Integra.Opencart.Desktop
                         string datahoje = Convert.ToString(DateTime.Now);
                         DadosMysql.CloseConnection();
 
-                        //DadosMysql.Insert("INSERT INTO `occe_product` (`product_id`, `model`, `sku`, `upc`, `ean`, `jan`, `isbn`, `mpn`, `location`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `points`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `length_class_id`, `subtract`, `minimum`, `sort_order`, `status`, `viewed`, `date_added`, `date_modified`) VALUES ('" + UlIP.ToString() + "', '" + descricao + "', '', '', '" + ean + "', '', '', '', '', '" + quantidade + "', '7', 'catalog/PRODUTOS/DNW_PRO_GEN1_00.png', '5','1', '" + valor + "', '0', '0', '" + DateTime.Now.ToString() + "', '5.00000000', '2', '1.00000000', '2.00000000', '3.00000000', '1', '1', '1', '1', '1', '1', '" + datahoje + "', '0000-00-00'); ");
-
-                        DadosMysql.Insert("INSERT INTO `oc_product` (`product_id`, `model`, `sku`, `upc`, `ean`, `jan`, `isbn`, `mpn`, `location`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `points`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `length_class_id`, `subtract`, `minimum`, `sort_order`, `status`, `viewed`, `date_added`, `date_modified`)" +
-                            " VALUES ('" + UlIP.ToString() + "', '" + descricao + "', '', '', '" + ean + "', '', '', '', '', '" + quantidade + "', '7', 'catalog/PRODUTOS/DNW_PRO_GEN1_00.png', '5','1', '" + valor + "', '0', '0', '" + DateTime.Now.ToString() + "', '5.00000000', '2', '1.00000000', '2.00000000', '3.00000000', '1', '1', '1', '1', '1', '1', '" + datahoje + "', '0000-00-00'); ");
+                        //DadosMysql.Insert("INSERT INTO `occe_product` (`product_id`, `model`, `sku`, `upc`, `ean`, `jan`, `isbn`, `mpn`, `location`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `points`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `length_class_id`, `subtract`, `minimum`, `sort_order`, `status`, `viewed`, `date_added`, `date_modified`)" + " VALUES ('" + UlIP.ToString() + "', '" + descricao + "', '', '', '" + ean + "', '', '', '', '', '" + quantidade + "', '7', 'catalog/PRODUTOS/DNW_PRO_GEN1_00.png', '5','1', '" + valor + "', '0', '0', '" + DateTime.Now.ToString() + "', '5.00000000', '2', '1.00000000', '2.00000000', '3.00000000', '1', '1', '1', '1', '1', '1', '" + datahoje + "', '0000-00-00'); ");
 
 
-                        //DadosMysql.Insert("INSERT INTO `occe_product_description` (`product_id`, `language_id`, `name`, `description`, `tag`, `meta_title`, `meta_description`, `meta_keyword`) VALUES ('" + UlIP.ToString() + "', 2, '" + descricao + "', '" + descricao + "', 'xx', 'xx', 'xx', 'xx'); ");
+                        DadosMysql.Insert("INSERT INTO `oc_product` (`product_id`, `model`, `sku`, `upc`, `ean`, `jan`, `isbn`, `mpn`, `location`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `points`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `length_class_id`, `subtract`, `minimum`, `sort_order`, `status`, `viewed`, `date_added`, `date_modified`)" + " VALUES ('" + UlIP.ToString() + "', '" + descricao + "', '', '', '" + ean + "', '', '', '', '', '" + quantidade + "', '7', 'catalog/PRODUTOS/DNW_PRO_GEN1_00.png', '5','1', '" + valor + "', '0', '0', '" + DateTime.Now.ToString() + "', '5.00000000', '2', '1.00000000', '2.00000000', '3.00000000', '1', '1', '1', '1', '1', '1', '" + datahoje + "', '0000-00-00'); ");
 
-                        DadosMysql.Insert("INSERT INTO `oc_product_description` (`product_id`, `language_id`, `name`, `description`, `tag`, `meta_title`, `meta_description`, `meta_keyword`) " +
-                            "VALUES ('" + UlIP.ToString() + "', 2, '" + descricao + "', '" + descricao + "', 'xx', 'xx', 'xx', 'xx'); ");
+
+                        //DadosMysql.Insert("INSERT INTO `occe_product_description` (`product_id`, `language_id`, `name`, `description`, `tag`, `meta_title`, `meta_description`, `meta_keyword`) " + "VALUES ('" + UlIP.ToString() + "', 2, '" + descricao + "', '" + descricao + "', 'xx', 'xx', 'xx', 'xx'); ");
+
+                        DadosMysql.Insert("INSERT INTO `oc_product_description` (`product_id`, `language_id`, `name`, `description`, `tag`, `meta_title`, `meta_description`, `meta_keyword`) " + "VALUES ('" + UlIP.ToString() + "', 2, '" + descricao + "', '" + descricao + "', 'xx', 'xx', 'xx', 'xx'); ");
+
                         var Linha = "Novo Produto Adicionado: " + l_addedRow["barras"].ToString() + " - " + l_addedRow["descricao"].ToString();
                         tbDadosNovos.Rows.Add(Linha);
                         this.Invoke((MethodInvoker)delegate ()
@@ -533,6 +541,8 @@ namespace Integra.Opencart.Desktop
                     dtfi.FullDateTimePattern = "yyyy-MM-dd 00:00:00";
                     descricao = descricao.Replace("'", "");
 
+                    
+
                     if (Registros > 0)
                     {
                         if (Mdescricao != descricao || Mvalor != valor || Mean != ean || Mquantidade != quantidade)
@@ -614,6 +624,7 @@ namespace Integra.Opencart.Desktop
                     Registros = rows.Length;
                     string num = Registros.ToString();
 
+                    
                     if (Registros > 0)
                     {
                         DadosMysql.CloseConnection();

@@ -18,6 +18,8 @@ namespace Integra.Opencart.Desktop
         ConnMySql DadosMysql = new ConnMySql();
         ConnPostgres DadosPostgres = new ConnPostgres();
 
+        CIniFile Ini = new CIniFile();
+
         private DataSet ds;
 
         string Mdescricao = string.Empty;
@@ -31,6 +33,9 @@ namespace Integra.Opencart.Desktop
         bool conectado = false;
         public int total = 0;
         string valorgeral = string.Empty;
+
+
+        string variavelhora = string.Empty;
         //private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         //{
         //    SqlConnection conn = new SqlConnection(Conexao); // A variável conn é do tipo SqlConnection e tem como parâmetro a string de conexão.
@@ -72,15 +77,31 @@ namespace Integra.Opencart.Desktop
 
         }
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+
+        private void Atualizar()
         {
 
             try
             {
 
+                
+
+                DateTime dt = DateTime.Now;
+
+                dt.AddHours(5);
+                
+
                 backgroundWorker1.WorkerSupportsCancellation = true;
 
 
+                //var variavelHoraConvertida = Convert.ToInt32(variavelhora);
+                this.Invoke((MethodInvoker)delegate ()
+                {
+                    //lblHora.Text = DateTime.Now.AddHours(variavelHoraConvertida).ToString();
+
+                    lblHora.Text = DateTime.Now.AddHours(5).ToString();
+
+                });
                 this.Invoke((MethodInvoker)delegate ()
                 {
 
@@ -150,7 +171,7 @@ namespace Integra.Opencart.Desktop
 
                 this.Invoke((MethodInvoker)delegate ()
                 {
-                    
+
                     progressBar1.Value += 5;
 
                 });
@@ -198,7 +219,7 @@ namespace Integra.Opencart.Desktop
 
                 UlID++;
                 UlIP++;
-                
+
                 List<DataRow> ListM = TblPMySql.AsEnumerable().ToList();
                 List<DataRow> ListP = TblPostrgres.AsEnumerable().ToList();
                 List<DataRow> ListMD = TblMySqlDepto.AsEnumerable().ToList();
@@ -253,7 +274,7 @@ namespace Integra.Opencart.Desktop
 
                     DadosMysql.CloseConnection();
 
-                    
+
 
                     if (Registros == 0)
                     {
@@ -265,7 +286,7 @@ namespace Integra.Opencart.Desktop
                         DadosMysql.Insert("INSERT INTO oc_category_description(category_id,language_id, name) VALUES ('" + UlID.ToString() + "','1', '" + descricao.Trim() + "'); ");
 
                         var Linha = "Novo Depto. Adicionado: " + l_adDeptoRow["cod"].ToString() + " - " + l_adDeptoRow["sec"].ToString();
-                         tbDeptosNovos.Rows.Add(Linha);
+                        tbDeptosNovos.Rows.Add(Linha);
                         this.Invoke((MethodInvoker)delegate ()
                         {
 
@@ -281,12 +302,12 @@ namespace Integra.Opencart.Desktop
                     total++;
 
                     valorgeral = total.ToString();
-                    
+
                 }
 
                 this.Invoke((MethodInvoker)delegate ()
                 {
-                    
+
                     progressBar1.Value += 10;
 
                 });
@@ -330,7 +351,7 @@ namespace Integra.Opencart.Desktop
                     DadosMysql.CloseConnection();
 
 
-                    
+
                     if (Registros == 0)
                     {
                         // DadosMysql.CloseConnection();
@@ -541,7 +562,7 @@ namespace Integra.Opencart.Desktop
                     dtfi.FullDateTimePattern = "yyyy-MM-dd 00:00:00";
                     descricao = descricao.Replace("'", "");
 
-                    
+
 
                     if (Registros > 0)
                     {
@@ -569,7 +590,7 @@ namespace Integra.Opencart.Desktop
                 }
 
 
-                
+
                 this.Invoke((MethodInvoker)delegate ()
                 {
 
@@ -624,7 +645,7 @@ namespace Integra.Opencart.Desktop
                     Registros = rows.Length;
                     string num = Registros.ToString();
 
-                    
+
                     if (Registros > 0)
                     {
                         DadosMysql.CloseConnection();
@@ -728,20 +749,37 @@ namespace Integra.Opencart.Desktop
                 this.Invoke((MethodInvoker)delegate ()
                 {
 
-                    Lista.Items.Add("Ocorreu um erro interno - "+ ex +"");
+                    Lista.Items.Add("Ocorreu um erro interno - " + ex + "");
 
                 });
             }
+
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Atualizar();
+
         }
 
         public Form1()
         {
             InitializeComponent();
 
-            DateTime dt = DateTime.Now;
+         
+            //Ini.IniFile("checkout");
+            //variavelhora = Ini.IniReadString("TEMPO", "horas", "");
 
-            dt.AddHours(5);
-            lblHora.Text = DateTime.Now.AddHours(5).ToString();
+            var worker = new BackgroundWorker();
+            worker.WorkerSupportsCancellation = true;
+            worker.WorkerReportsProgress = true;
+            worker.DoWork += backgroundWorker1_DoWork;
+            //worker.ProgressChanged += worker_ProgressChanged;
+            worker.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
+
+            
+
+            lblHora.Text = "-";
 
             if (DadosPostgres.OpenConnection())
             {
@@ -769,6 +807,7 @@ namespace Integra.Opencart.Desktop
                 label1.Visible = true;
                 label2.Visible = true;
             }
+            
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -781,11 +820,17 @@ namespace Integra.Opencart.Desktop
 
         private void TimerInicio_Tick(object sender, EventArgs e)
         {
-            DateTime dt = DateTime.Now;
 
-            dt.AddHours(4);
-            lblHora.Text = DateTime.Now.AddHours(4).ToString();
-            // AtualizaDados();
+            if (lblHora.Text == DateTime.Now.ToString())
+            {
+                btnIniciarProcesso.Enabled = false;
+                
+                Cursor.Current = Cursors.WaitCursor;
+
+                Atualizar();
+            }
+
+
         }
 
         private void btnIniciarProcesso_Click(object sender, EventArgs e)
@@ -794,7 +839,7 @@ namespace Integra.Opencart.Desktop
 
 
             btnIniciarProcesso.Enabled = false;
-            // wait cursor
+            
             Cursor.Current = Cursors.WaitCursor;
             backgroundWorker1.RunWorkerAsync();
 
@@ -804,13 +849,13 @@ namespace Integra.Opencart.Desktop
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
 
-
             label4.Text = valorgeral;
             Lista.Items.Add(valorgeral);
             label4.Refresh();
             //progressBar1.Step = total;
             //progressBar1.Refresh();
 
+            
         }
 
         private void button3_Click(object sender, EventArgs e)

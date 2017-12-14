@@ -136,6 +136,7 @@
             // 
             // TimerInicio
             // 
+            this.TimerInicio.Enabled = true;
             this.TimerInicio.Tick += new System.EventHandler(this.TimerInicio_Tick);
             // 
             // progressBar1

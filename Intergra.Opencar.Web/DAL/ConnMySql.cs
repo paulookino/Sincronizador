@@ -177,8 +177,9 @@ namespace Intergra.Opencar.Web.DAL
                     {
                         
                         DataRow row = dt.NewRow();
-                        ID = query.Contains("category_id") ? Convert.ToInt32(dr["category_id"].ToString()) :
-                            Convert.ToInt32(dr["product_id"].ToString());
+                        ID =  query.Contains("manufacturer_id") ? Convert.ToInt32(dr["manufacturer_id"].ToString()) 
+                            : query.Contains("category_id") ? Convert.ToInt32(dr["category_id"].ToString()) 
+                            : Convert.ToInt32(dr["product_id"].ToString());
                         dt.Rows.Add(row);
                     }
 
@@ -332,6 +333,356 @@ namespace Intergra.Opencar.Web.DAL
                         DataRow row = dt.NewRow();
                         row["language_id"] = dr["language_id"].ToString();
                         row["name"] = dr["name"].ToString();
+
+                        dt.Rows.Add(row);
+                    }
+
+                    //close Data Reader
+                    dr.Close();
+
+                    //close Connection
+                    this.CloseConnection();
+
+                    //return list to be displayed
+                    return dt;
+
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+            return dt;
+        }
+
+
+        public DataTable RetornaDadosFabricante(string query)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("manufacturer_id", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+            dt.Columns.Add("name", typeof(string)); //11) NOT NULL AUTO_INCREMENT,
+            dt.Columns.Add("image", typeof(string)); //64) NOT NULL,
+            dt.Columns.Add("sort_order", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+
+            //Open connection
+            try
+            {
+                if (OpenConnection())
+                {
+
+                    //Create Command
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    //Create a data reader and Execute the command
+                    MySqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        DataRow row = dt.NewRow();
+                        row["name"] = dr["name"].ToString();
+                        row["image"] = dr["image"].ToString();
+                        row["sort_order"] = dr["sort_order"].ToString();
+
+                        dt.Rows.Add(row);
+                    }
+
+                    //close Data Reader
+                    dr.Close();
+
+                    //close Connection
+                    this.CloseConnection();
+
+                    //return list to be displayed
+                    return dt;
+
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+            return dt;
+        }
+
+
+        public DataTable RetornaDadosCategoryPath(string query)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("category_id", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+            dt.Columns.Add("path_id", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+            dt.Columns.Add("level", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+
+            //Open connection
+            try
+            {
+                if (OpenConnection())
+                {
+
+                    //Create Command
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    //Create a data reader and Execute the command
+                    MySqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        DataRow row = dt.NewRow();
+                        //row["category_id"] = dr["category_id"].ToString();
+                        row["path_id"] = dr["path_id"].ToString();
+                        row["level"] = dr["level"].ToString();
+
+                        dt.Rows.Add(row);
+                    }
+
+                    //close Data Reader
+                    dr.Close();
+
+                    //close Connection
+                    this.CloseConnection();
+
+                    //return list to be displayed
+                    return dt;
+
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+            return dt;
+        }
+
+
+        public DataTable RetornaDadosCategoryLayout(string query)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("category_id", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+            dt.Columns.Add("store_id", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+            dt.Columns.Add("layout_id", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+
+            //Open connection
+            try
+            {
+                if (OpenConnection())
+                {
+
+                    //Create Command
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    //Create a data reader and Execute the command
+                    MySqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        DataRow row = dt.NewRow();
+                        //row["category_id"] = dr["category_id"].ToString();
+                        row["store_id"] = dr["store_id"].ToString();
+                        row["layout_id"] = dr["layout_id"].ToString();
+
+                        dt.Rows.Add(row);
+                    }
+
+                    //close Data Reader
+                    dr.Close();
+
+                    //close Connection
+                    this.CloseConnection();
+
+                    //return list to be displayed
+                    return dt;
+
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+            return dt;
+        }
+
+
+        public DataTable RetornaDadosCategoryStore(string query)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("category_id", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+            dt.Columns.Add("store_id", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+
+            //Open connection
+            try
+            {
+                if (OpenConnection())
+                {
+
+                    //Create Command
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    //Create a data reader and Execute the command
+                    MySqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        DataRow row = dt.NewRow();
+                        //row["category_id"] = dr["category_id"].ToString();
+                        row["store_id"] = dr["store_id"].ToString();
+
+                        dt.Rows.Add(row);
+                    }
+
+                    //close Data Reader
+                    dr.Close();
+
+                    //close Connection
+                    this.CloseConnection();
+
+                    //return list to be displayed
+                    return dt;
+
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+            return dt;
+        }
+
+
+        public DataTable RetornaDadosProductCategory(string query)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("product_id", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+            dt.Columns.Add("category_id", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+
+            //Open connection
+            try
+            {
+                if (OpenConnection())
+                {
+
+                    //Create Command
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    //Create a data reader and Execute the command
+                    MySqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        DataRow row = dt.NewRow();
+                        //row["product_id"] = dr["product_id"].ToString();
+                        row["category_id"] = dr["category_id"].ToString();
+
+                        dt.Rows.Add(row);
+                    }
+
+                    //close Data Reader
+                    dr.Close();
+
+                    //close Connection
+                    this.CloseConnection();
+
+                    //return list to be displayed
+                    return dt;
+
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+            return dt;
+        }
+
+
+        public DataTable RetornaDadosProductStore(string query)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("product_id", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+            dt.Columns.Add("store_id", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+
+            //Open connection
+            try
+            {
+                if (OpenConnection())
+                {
+
+                    //Create Command
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    //Create a data reader and Execute the command
+                    MySqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        DataRow row = dt.NewRow();
+                        //row["product_id"] = dr["product_id"].ToString();
+                        row["store_id"] = dr["store_id"].ToString();
+
+                        dt.Rows.Add(row);
+                    }
+
+                    //close Data Reader
+                    dr.Close();
+
+                    //close Connection
+                    this.CloseConnection();
+
+                    //return list to be displayed
+                    return dt;
+
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+            return dt;
+        }
+
+
+        public DataTable RetornaDadosManufacturerStore(string query)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("manufacturer_id", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+            dt.Columns.Add("store_id", typeof(int)); //11) NOT NULL AUTO_INCREMENT,
+
+            //Open connection
+            try
+            {
+                if (OpenConnection())
+                {
+
+                    //Create Command
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    //Create a data reader and Execute the command
+                    MySqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        DataRow row = dt.NewRow();
+                        //row["manufacturer_id"] = dr["manufacturer_id"].ToString();
+                        row["store_id"] = dr["store_id"].ToString();
 
                         dt.Rows.Add(row);
                     }

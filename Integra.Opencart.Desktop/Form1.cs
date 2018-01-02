@@ -166,6 +166,45 @@ namespace Integra.Opencart.Desktop
                 TblMySqlDepto.Columns.Add("name", typeof(string));
                 TblMySqlDepto.Columns.Add("language_id", typeof(string));
 
+
+                var TblMySqlFabricante = new DataTable(); 
+                TblMySqlFabricante.Columns.Add("manufacturer_id", typeof(string));
+                TblMySqlFabricante.Columns.Add("name", typeof(string));
+                TblMySqlFabricante.Columns.Add("image", typeof(string));
+                TblMySqlFabricante.Columns.Add("sort_order", typeof(string));
+
+
+                var TblMySqlCategoriaPath = new DataTable();
+                TblMySqlCategoriaPath.Columns.Add("category_id", typeof(string));
+                TblMySqlCategoriaPath.Columns.Add("path_id", typeof(string));
+                TblMySqlCategoriaPath.Columns.Add("level", typeof(string));
+
+
+                var TblMySqlCategoriaLayout = new DataTable();
+                TblMySqlCategoriaLayout.Columns.Add("category_id", typeof(string));
+                TblMySqlCategoriaLayout.Columns.Add("store_id", typeof(string));
+                TblMySqlCategoriaLayout.Columns.Add("layout_id", typeof(string));
+
+
+                var TblMySqlCategoriaStore = new DataTable();
+                TblMySqlCategoriaStore.Columns.Add("category_id", typeof(string));
+                TblMySqlCategoriaStore.Columns.Add("store_id", typeof(string));
+
+
+                var TblMySqlProductCategory = new DataTable();
+                TblMySqlProductCategory.Columns.Add("product_id", typeof(string));
+                TblMySqlProductCategory.Columns.Add("category_id", typeof(string));
+
+
+                var TblMySqlProductStore = new DataTable();
+                TblMySqlProductStore.Columns.Add("product_id", typeof(string));
+                TblMySqlProductStore.Columns.Add("store_id", typeof(string));
+
+
+                var TblMySqlManufactureStore = new DataTable();
+                TblMySqlManufactureStore.Columns.Add("manufacturer_id", typeof(string));
+                TblMySqlManufactureStore.Columns.Add("store_id", typeof(string));
+
                 string PSql = " SELECT * from web.prd_cad where uad = 1 order by descricao limit 10";
 
 
@@ -207,9 +246,31 @@ namespace Integra.Opencart.Desktop
                 valorgeral = "Carregando dados de categorias opencart..";
 
                 //TblMySqlDepto = DadosMysql.RetornaDadosDepto("SELECT * FROM occe_category_description  limit 10");
-
                 TblMySqlDepto = DadosMysql.RetornaDadosDepto("SELECT * FROM oc_category_description  limit 10");
 
+                //TblMySqlFabricante = DadosMysql.RetornaDadosFabricante("SELECT * FROM occe_manufacturer limit 10");
+                TblMySqlFabricante = DadosMysql.RetornaDadosFabricante("SELECT * FROM oc_manufacturer limit 10");
+
+                //TblMySqlCategoriaPath = DadosMysql.RetornaDadosCategoryPath("SELECT * FROM occe_category_path limit 10");
+                TblMySqlCategoriaPath = DadosMysql.RetornaDadosCategoryPath("SELECT * FROM oc_category_path limit 10");
+
+
+                //TblMySqlCategoriaLayout = DadosMysql.RetornaDadosCategoryLayout("SELECT * FROM occe_category_to_layout limit 10");
+                TblMySqlCategoriaLayout = DadosMysql.RetornaDadosCategoryLayout("SELECT * FROM oc_category_to_layout limit 10");
+
+
+                //TblMySqlCategoriaStore = DadosMysql.RetornaDadosCategoryStore("SELECT * FROM occe_category_to_store limit 10");
+                TblMySqlCategoriaStore = DadosMysql.RetornaDadosCategoryStore("SELECT * FROM oc_category_to_store limit 10");
+
+
+                //TblMySqlProductCategory = DadosMysql.RetornaDadosProductCategory("SELECT * FROM occe_product_to_category limit 10");
+                TblMySqlProductCategory = DadosMysql.RetornaDadosProductCategory("SELECT * FROM oc_product_to_category limit 10");
+
+                //TblMySqlProductStore = DadosMysql.RetornaDadosProductStore("SELECT * FROM occe_product_to_store limit 10");
+                TblMySqlProductStore = DadosMysql.RetornaDadosProductStore("SELECT * FROM oc_product_to_store limit 10");
+
+                //TblMySqlManufactureStore = DadosMysql.RetornaDadosManufacturerStore("SELECT * FROM occe_manufacturer_to_store limit 10");
+                TblMySqlManufactureStore = DadosMysql.RetornaDadosManufacturerStore("SELECT * FROM oc_manufacturer_to_store limit 10");
 
                 //int UlID = DadosMysql.RetornaMaxId("SELECT max(category_id) as category_id FROM occe_category_description");
                 int UlID = DadosMysql.RetornaMaxId("SELECT max(category_id) as category_id FROM oc_category_description");
@@ -217,13 +278,29 @@ namespace Integra.Opencart.Desktop
                 //int UlIP = DadosMysql.RetornaMaxId("SELECT max(product_id) as product_id FROM occe_product");
                 int UlIP = DadosMysql.RetornaMaxId("SELECT max(product_id) as product_id FROM oc_product");
 
+
+                //int manufacturerId = DadosMysql.RetornaMaxId("SELECT max(manufacturer_id) as manufacturer_id FROM occe_manufacturer");
+                int manufacturerId = DadosMysql.RetornaMaxId("SELECT max(manufacturer_id) as manufacturer_id FROM oc_manufacturer");
+
+
+
                 UlID++;
                 UlIP++;
+                manufacturerId++;
+
 
                 List<DataRow> ListM = TblPMySql.AsEnumerable().ToList();
                 List<DataRow> ListP = TblPostrgres.AsEnumerable().ToList();
                 List<DataRow> ListMD = TblMySqlDepto.AsEnumerable().ToList();
                 List<DataRow> ListPD = TblPostrgresDepto.AsEnumerable().ToList();
+
+                List<DataRow> ListManufacture = TblMySqlManufactureStore.AsEnumerable().ToList();
+                List<DataRow> ListCategoriaPath = TblMySqlCategoriaPath.AsEnumerable().ToList();
+                List<DataRow> ListCategoriaCategoriaLayout = TblMySqlCategoriaLayout.AsEnumerable().ToList();
+                List<DataRow> ListCategoriaCategoriaStore = TblMySqlCategoriaStore.AsEnumerable().ToList();
+                List<DataRow> ListProductCategory = TblMySqlProductCategory.AsEnumerable().ToList();
+                List<DataRow> ListProductStore = TblMySqlProductStore.AsEnumerable().ToList();
+                List<DataRow> ListManufactureStore = TblMySqlManufactureStore.AsEnumerable().ToList();
 
                 int P = TblPostrgres.Rows.Count;
                 int M = TblPMySql.Rows.Count;
@@ -233,6 +310,640 @@ namespace Integra.Opencart.Desktop
 
                 var TblDeptoMySqlKeys = TblMySqlDepto.Select().Select((r) => (string)r["name"]);
                 var l_adDeptoRows = TblPostrgresDepto.Select().Where((r) => !TblDeptoMySqlKeys.Contains((string)r["sec"]));
+
+
+                var TblFabricanteMySqlKeys = TblMySqlFabricante.Select().Select((r) => (string)r["name"]);
+                var TblCategoriaPathMySqlKeys = TblMySqlCategoriaPath.Select().Select((r) => (string)r["category_id"]);
+                var TblCategoriaLayoutPathMySqlKeys = TblMySqlCategoriaLayout.Select().Select((r) => (string)r["category_id"]);
+                var TblCategoriaStorePathMySqlKeys = TblMySqlCategoriaStore.Select().Select((r) => (string)r["category_id"]);
+                var TblProductCategoryStorePathMySqlKeys = TblMySqlProductCategory.Select().Select((r) => (string)r["product_id"]);
+                var TblProductStorePathMySqlKeys = TblMySqlProductStore.Select().Select((r) => (string)r["product_id"]);
+                var TblManufactureStorePathMySqlKeys = TblMySqlManufactureStore.Select().Select((r) => (string)r["manufacturer_id"]);
+
+
+                #region Inseri Manufacturer
+                DataTable tbFabricantesEncontrados = new DataTable();
+                DataTable tbFabricantesNovos = new DataTable();
+                tbFabricantesNovos.Columns.Add("Registros", typeof(String));
+
+                total = 0;
+
+                foreach (var l_adDeptoRow in l_adDeptoRows)
+                {
+
+                    ean = l_adDeptoRow["cod"].ToString();
+                    descricao = l_adDeptoRow["sec"].ToString();
+                    descricao = descricao.Replace("'", "");
+                    descricao = descricao.Trim();
+
+                    //tbFabricantesEncontrados = DadosMysql.RetornaDadosFabricante("SELECT * FROM occe_manufacturer where name = '" + descricao + "' ");
+                    tbFabricantesEncontrados = DadosMysql.RetornaDadosFabricante("SELECT * FROM oc_manufacturer where name = '" + descricao + "' ");
+
+                    int Registros = 0;
+                    DataRow[] rows;
+
+                    rows = tbFabricantesEncontrados.Select("name = '" + descricao + "' ");
+                    // tbDeptosEncontrados.Select("category_id").Max().ToString().FirstOrDefault();
+
+                    foreach (DataRow dr in rows)
+                    {
+                        Mdescricao = dr["name"].ToString();
+                        Mean = dr["manufacturer_id"].ToString();
+                    }
+                    
+                    Registros = rows.Length;
+                    string num = Registros.ToString();
+
+                    DadosMysql.CloseConnection();
+
+
+
+                    if (Registros == 0)
+                    {
+                        // DadosMysql.CloseConnection();
+
+                        //DadosMysql.Insert("INSERT INTO occe_manufacturer (manufacturer_id, name, image, sort_order) VALUES ('" + manufacturerId.ToString() + "',' " + descricao.Trim() + " ', 'catalog / demo / htc_logo.jpg' , '0'); ");
+                        DadosMysql.Insert("INSERT INTO oc_manufacturer (manufacturer_id, name, image, sort_order) VALUES ('" + manufacturerId.ToString() + "',' " + descricao.Trim() + " ', 'catalog / demo / htc_logo.jpg' , '0'); ");
+                        var Linha = "Novo Fabricante Adicionado: " + l_adDeptoRow["cod"].ToString() + " - " + l_adDeptoRow["sec"].ToString();
+                        tbFabricantesNovos.Rows.Add(Linha);
+                        this.Invoke((MethodInvoker)delegate ()
+                        {
+
+                            Lista.Items.Add(Linha);
+
+                        });
+                        //Thread.Sleep(1000);
+                        //      DadosMysql.Insert("INSERT INTO occe_category(`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES ('" + UlID.ToString() + "','catalog/DEPARTAMENTOS/DNW_HIGB_00.png','0','3','3','1','2017-12-11 19:48:07','2017-12-11 19:48:07'); ");
+
+                        manufacturerId++;
+
+                    }
+                    total++;
+
+                    valorgeral = total.ToString();
+
+                }
+                #endregion
+
+                #region Inseri Categoria Path
+                DataTable tbCategoryPathEncontrados = new DataTable();
+                DataTable tbCategoryPathNovos = new DataTable();
+                tbCategoryPathNovos.Columns.Add("Registros", typeof(String));
+
+                total = 0;
+
+                foreach (var l_adDeptoRow in l_adDeptoRows)
+                {
+
+                    ean = l_adDeptoRow["cod"].ToString();
+                    descricao = l_adDeptoRow["sec"].ToString();
+                    descricao = descricao.Replace("'", "");
+                    descricao = descricao.Trim();
+
+                    //tbCategoryPathEncontrados = DadosMysql.RetornaDadosCategoryPath("SELECT * FROM occe_category_path where category_id = '" + descricao + "' and path_id = '"+ descricao +"' ");
+                    tbCategoryPathEncontrados = DadosMysql.RetornaDadosCategoryPath("SELECT * FROM oc_category_path where category_id = '" + descricao + "' and path_id = '"+ descricao +"' ");
+
+                    int Registros = 0;
+                    DataRow[] rows;
+
+                    rows = tbCategoryPathEncontrados.Select("category_id = '" + descricao + "' and path_id = '" + descricao + "'");
+                    // tbDeptosEncontrados.Select("category_id").Max().ToString().FirstOrDefault();
+
+                    foreach (DataRow dr in rows)
+                    {
+                        Mdescricao = dr["category_id"].ToString();
+                        Mdescricao = dr["path_id"].ToString();
+                        Mean = dr["level"].ToString();
+                    }
+
+                    Registros = rows.Length;
+                    string num = Registros.ToString();
+
+                    DadosMysql.CloseConnection();
+
+
+
+                    if (Registros == 0)
+                    {
+                        // DadosMysql.CloseConnection();
+
+                        //DadosMysql.Insert("INSERT INTO occe_category_path (category_id, path_id, level) VALUES ('" + manufacturerId.ToString() + "',' " + manufacturerId.ToString() + " ',' "+ manufacturerId.ToString() +"); ");
+                        DadosMysql.Insert("INSERT INTO oc_category_path (category_id, path_id, level) VALUES ('" + manufacturerId.ToString() + "',' " + manufacturerId.ToString() + " ',' "+ manufacturerId.ToString() +"); ");
+
+                        //INSERT INTO `occe_category_path` (`category_id`, `path_id`, `level`) VALUES (5, 101, 0) (5, 102, 0)
+                        var Linha = "Novo Categoria Path Adicionado: " + l_adDeptoRow["cod"].ToString() + " - " + l_adDeptoRow["sec"].ToString();
+                        tbCategoryPathNovos.Rows.Add(Linha);
+                        this.Invoke((MethodInvoker)delegate ()
+                        {
+
+                            Lista.Items.Add(Linha);
+
+                        });
+                        //Thread.Sleep(1000);
+                        //      DadosMysql.Insert("INSERT INTO occe_category(`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES ('" + UlID.ToString() + "','catalog/DEPARTAMENTOS/DNW_HIGB_00.png','0','3','3','1','2017-12-11 19:48:07','2017-12-11 19:48:07'); ");
+
+                       // manufacturerId++;
+
+                    }
+                    total++;
+
+                    valorgeral = total.ToString();
+
+                }
+                #endregion
+
+                #region Inseri Categoria Layout
+                DataTable tbCategoryLayoutEncontrados = new DataTable();
+                DataTable tbCategoryLayoutNovos = new DataTable();
+                tbCategoryLayoutNovos.Columns.Add("Registros", typeof(String));
+
+                total = 0;
+
+                foreach (var l_adDeptoRow in l_adDeptoRows)
+                {
+
+                    ean = l_adDeptoRow["cod"].ToString();
+                    descricao = l_adDeptoRow["sec"].ToString();
+                    descricao = descricao.Replace("'", "");
+                    descricao = descricao.Trim();
+
+                    //tbCategoryLayoutEncontrados = DadosMysql.RetornaDadosCategoryLayout("SELECT * FROM occe_category_to_layout where category_id = '" + descricao + "' and store_id = '" + descricao + "' and layout_id = '" + descricao + "' ");
+                    tbCategoryLayoutEncontrados = DadosMysql.RetornaDadosCategoryLayout("SELECT * FROM oc_category_to_layout where category_id = '" + descricao + "' and store_id = '" + descricao + "' and layout_id = '" + descricao + "' ");
+
+                    int Registros = 0;
+                    DataRow[] rows;
+
+                    rows = tbCategoryPathEncontrados.Select("category_id = '" + descricao + "' and store_id = '" + descricao + "' and layout_id = '" + descricao + "'");
+                    // tbDeptosEncontrados.Select("category_id").Max().ToString().FirstOrDefault();
+
+                    foreach (DataRow dr in rows)
+                    {
+                        Mdescricao = dr["category_id"].ToString();
+                        Mdescricao = dr["store_id"].ToString();
+                        Mean = dr["layout_id"].ToString();
+                    }
+
+                    Registros = rows.Length;
+                    string num = Registros.ToString();
+
+                    DadosMysql.CloseConnection();
+
+
+
+                    if (Registros == 0)
+                    {
+                        // DadosMysql.CloseConnection();
+
+                        //DadosMysql.Insert("INSERT INTO occe_category_to_layout (category_id, store_id, layout_id) VALUES ('" + manufacturerId.ToString() + "',' " + manufacturerId.ToString() + " ',' " + manufacturerId.ToString() + "); ");
+                        DadosMysql.Insert("INSERT INTO oc_category_to_layout (category_id, store_id, layout_id) VALUES ('" + manufacturerId.ToString() + "',' " + manufacturerId.ToString() + " ',' " + manufacturerId.ToString() + "); ");
+                        
+
+                        //INSERT INTO `occe_category_path` (`category_id`, `path_id`, `level`) VALUES (5, 101, 0) (5, 102, 0)
+                        var Linha = "Novo Categoria Layout Adicionado: " + l_adDeptoRow["cod"].ToString() + " - " + l_adDeptoRow["sec"].ToString();
+                        tbCategoryLayoutNovos.Rows.Add(Linha);
+                        this.Invoke((MethodInvoker)delegate ()
+                        {
+
+                            Lista.Items.Add(Linha);
+
+                        });
+                        //Thread.Sleep(1000);
+                        //      DadosMysql.Insert("INSERT INTO occe_category(`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES ('" + UlID.ToString() + "','catalog/DEPARTAMENTOS/DNW_HIGB_00.png','0','3','3','1','2017-12-11 19:48:07','2017-12-11 19:48:07'); ");
+
+                        // manufacturerId++;
+
+                    }
+                    total++;
+
+                    valorgeral = total.ToString();
+
+                }
+                #endregion
+                
+                #region Inseri Categoria Store
+                DataTable tbCategoryStoreEncontrados = new DataTable();
+                DataTable tbCategoryStoretNovos = new DataTable();
+                tbCategoryStoretNovos.Columns.Add("Registros", typeof(String));
+
+                total = 0;
+
+                foreach (var l_adDeptoRow in l_adDeptoRows)
+                {
+
+                    ean = l_adDeptoRow["cod"].ToString();
+                    descricao = l_adDeptoRow["sec"].ToString();
+                    descricao = descricao.Replace("'", "");
+                    descricao = descricao.Trim();
+
+                    //tbCategoryStoreEncontrados = DadosMysql.RetornaDadosCategoryStore("SELECT * FROM occe_category_to_store where category_id = '" + descricao + "' and store_id = '" + descricao + "'");
+                    tbCategoryStoreEncontrados = DadosMysql.RetornaDadosCategoryStore("SELECT * FROM oc_category_to_store where category_id = '" + descricao + "' and store_id = '" + descricao + "'");
+
+                    int Registros = 0;
+                    DataRow[] rows;
+
+                    rows = tbCategoryPathEncontrados.Select("category_id = '" + descricao + "' and store_id = '" + descricao + "'");
+                    // tbDeptosEncontrados.Select("category_id").Max().ToString().FirstOrDefault();
+
+                    foreach (DataRow dr in rows)
+                    {
+                        Mdescricao = dr["category_id"].ToString();
+                        Mdescricao = dr["store_id"].ToString();
+                    }
+
+                    Registros = rows.Length;
+                    string num = Registros.ToString();
+
+                    DadosMysql.CloseConnection();
+
+
+
+                    if (Registros == 0)
+                    {
+                        // DadosMysql.CloseConnection();
+
+                        //DadosMysql.Insert("INSERT INTO occe_category_to_store (category_id, store_id) VALUES ('" + manufacturerId.ToString() + "',' " + manufacturerId.ToString() + "); ");
+                        DadosMysql.Insert("INSERT INTO oc_category_to_store (category_id, store_id) VALUES ('" + manufacturerId.ToString() + "',' " + manufacturerId.ToString() + "); ");
+
+                        //INSERT INTO `occe_category_to_store` (`category_id`, `store_id`) VALUES (5, 0)  
+                        
+                        var Linha = "Novo Categoria Store Adicionado: " + l_adDeptoRow["cod"].ToString() + " - " + l_adDeptoRow["sec"].ToString();
+                        tbCategoryStoretNovos.Rows.Add(Linha);
+                        this.Invoke((MethodInvoker)delegate ()
+                        {
+
+                            Lista.Items.Add(Linha);
+
+                        });
+                        //Thread.Sleep(1000);
+                        //      DadosMysql.Insert("INSERT INTO occe_category(`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES ('" + UlID.ToString() + "','catalog/DEPARTAMENTOS/DNW_HIGB_00.png','0','3','3','1','2017-12-11 19:48:07','2017-12-11 19:48:07'); ");
+
+                        // manufacturerId++;
+
+                    }
+                    total++;
+
+                    valorgeral = total.ToString();
+
+                }
+                #endregion
+
+                #region Inseri Product Category
+                DataTable tbProductCategoryEncontrados = new DataTable();
+                DataTable tbProductCategoryNovos = new DataTable();
+                tbProductCategoryNovos.Columns.Add("Registros", typeof(String));
+
+                total = 0;
+
+                foreach (var l_adDeptoRow in l_adDeptoRows)
+                {
+
+                    ean = l_adDeptoRow["cod"].ToString();
+                    descricao = l_adDeptoRow["sec"].ToString();
+                    descricao = descricao.Replace("'", "");
+                    descricao = descricao.Trim();
+
+                    //tbProductCategoryEncontrados = DadosMysql.RetornaDadosProductCategory("SELECT * FROM occe_product_to_category where product_id = '" + descricao + "' and category_id = '" + descricao + "'");
+                    tbProductCategoryEncontrados = DadosMysql.RetornaDadosProductCategory("SELECT * FROM oc_product_to_category where product_id = '" + descricao + "' and category_id = '" + descricao + "'");
+
+                    int Registros = 0;
+                    DataRow[] rows;
+
+                    rows = tbProductCategoryEncontrados.Select("product_id = '" + descricao + "' and category_id = '" + descricao + "'");
+                    // tbDeptosEncontrados.Select("category_id").Max().ToString().FirstOrDefault();
+
+                    foreach (DataRow dr in rows)
+                    {
+                        Mdescricao = dr["product_id"].ToString();
+                        Mdescricao = dr["category_id"].ToString();
+                    }
+
+                    Registros = rows.Length;
+                    string num = Registros.ToString();
+
+                    DadosMysql.CloseConnection();
+
+
+
+                    if (Registros == 0)
+                    {
+                        // DadosMysql.CloseConnection();
+
+                        //DadosMysql.Insert("INSERT INTO occe_product_to_category (product_id, category_id) VALUES ('" + manufacturerId.ToString() + "',' " + manufacturerId.ToString() + "); ");
+                        DadosMysql.Insert("INSERT INTO oc_product_to_category (product_id, category_id) VALUES ('" + manufacturerId.ToString() + "',' " + manufacturerId.ToString() + "); ");
+                        //INSERT INTO `occe_product_to_category` (`product_id`, `category_id`) VALUES (101, 5)
+                        
+
+                        var Linha = "Novo Produto Categoria Adicionado: " + l_adDeptoRow["cod"].ToString() + " - " + l_adDeptoRow["sec"].ToString();
+                        tbProductCategoryNovos.Rows.Add(Linha);
+                        this.Invoke((MethodInvoker)delegate ()
+                        {
+
+                            Lista.Items.Add(Linha);
+
+                        });
+                        //Thread.Sleep(1000);
+                        //      DadosMysql.Insert("INSERT INTO occe_category(`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES ('" + UlID.ToString() + "','catalog/DEPARTAMENTOS/DNW_HIGB_00.png','0','3','3','1','2017-12-11 19:48:07','2017-12-11 19:48:07'); ");
+
+                        // manufacturerId++;
+
+                    }
+                    total++;
+
+                    valorgeral = total.ToString();
+
+                }
+                #endregion
+
+                #region Inseri Product Store
+                DataTable tbProductStoreEncontrados = new DataTable();
+                DataTable tbProductStoreNovos = new DataTable();
+                tbProductStoreNovos.Columns.Add("Registros", typeof(String));
+
+                total = 0;
+
+                foreach (var l_adDeptoRow in l_adDeptoRows)
+                {
+
+                    ean = l_adDeptoRow["cod"].ToString();
+                    descricao = l_adDeptoRow["sec"].ToString();
+                    descricao = descricao.Replace("'", "");
+                    descricao = descricao.Trim();
+
+                    //tbProductStoreEncontrados = DadosMysql.RetornaDadosProductStore("SELECT * FROM occe_product_to_store where product_id = '" + descricao + "' and store_id = '" + descricao + "'");
+                    tbProductStoreEncontrados = DadosMysql.RetornaDadosProductStore("SELECT * FROM oc_product_to_store where product_id = '" + descricao + "' and store_id = '" + descricao + "'");
+
+                    int Registros = 0;
+                    DataRow[] rows;
+
+                    rows = tbProductStoreEncontrados.Select("product_id = '" + descricao + "' and store_id = '" + descricao + "'");
+                    // tbDeptosEncontrados.Select("category_id").Max().ToString().FirstOrDefault();
+
+                    foreach (DataRow dr in rows)
+                    {
+                        Mdescricao = dr["product_id"].ToString();
+                        Mdescricao = dr["store_id"].ToString();
+                    }
+
+                    Registros = rows.Length;
+                    string num = Registros.ToString();
+
+                    DadosMysql.CloseConnection();
+
+
+
+                    if (Registros == 0)
+                    {
+                        // DadosMysql.CloseConnection();
+
+                        //DadosMysql.Insert("INSERT INTO occe_product_to_store  (product_id, store_id) VALUES ('" + manufacturerId.ToString() + "',' " + manufacturerId.ToString() + "); ");
+                        DadosMysql.Insert("INSERT INTO oc_product_to_store  (product_id, store_id) VALUES ('" + manufacturerId.ToString() + "',' " + manufacturerId.ToString() + "); ");
+                        //INSERT INTO `occe_product_to_store` (`product_id`, `store_id`) VALUES (101, 0)
+
+                        var Linha = "Novo Produto Store Adicionado: " + l_adDeptoRow["cod"].ToString() + " - " + l_adDeptoRow["sec"].ToString();
+                        tbProductStoreNovos.Rows.Add(Linha);
+                        this.Invoke((MethodInvoker)delegate ()
+                        {
+
+                            Lista.Items.Add(Linha);
+
+                        });
+                        //Thread.Sleep(1000);
+                        //      DadosMysql.Insert("INSERT INTO occe_category(`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES ('" + UlID.ToString() + "','catalog/DEPARTAMENTOS/DNW_HIGB_00.png','0','3','3','1','2017-12-11 19:48:07','2017-12-11 19:48:07'); ");
+
+                        // manufacturerId++;
+
+                    }
+                    total++;
+
+                    valorgeral = total.ToString();
+
+                }
+                #endregion
+
+                #region Inseri Manufacturer Store
+                DataTable tbManufacturerStoreEncontrados = new DataTable();
+                DataTable tbManufacturerStoreNovos = new DataTable();
+                tbManufacturerStoreNovos.Columns.Add("Registros", typeof(String));
+
+                total = 0;
+
+                foreach (var l_adDeptoRow in l_adDeptoRows)
+                {
+
+                    ean = l_adDeptoRow["cod"].ToString();
+                    descricao = l_adDeptoRow["sec"].ToString();
+                    descricao = descricao.Replace("'", "");
+                    descricao = descricao.Trim();
+
+                    //tbManufacturerStoreEncontrados = DadosMysql.RetornaDadosManufacturerStore("SELECT * FROM occe_manufacturer_to_store where manufacturer_id = '" + descricao + "' and store_id = '" + descricao + "'");
+                    tbManufacturerStoreEncontrados = DadosMysql.RetornaDadosManufacturerStore("SELECT * FROM oc_manufacturer_to_store where manufacturer_id = '" + descricao + "' and store_id = '" + descricao + "'");
+
+                    int Registros = 0;
+                    DataRow[] rows;
+
+                    rows = tbManufacturerStoreEncontrados.Select("manufacturer_id = '" + descricao + "' and store_id = '" + descricao + "'");
+                    // tbDeptosEncontrados.Select("category_id").Max().ToString().FirstOrDefault();
+
+                    foreach (DataRow dr in rows)
+                    {
+                        Mdescricao = dr["manufacturer_id"].ToString();
+                        Mdescricao = dr["store_id"].ToString();
+                    }
+
+                    Registros = rows.Length;
+                    string num = Registros.ToString();
+
+                    DadosMysql.CloseConnection();
+
+
+
+                    if (Registros == 0)
+                    {
+                        // DadosMysql.CloseConnection();
+
+                        //DadosMysql.Insert("INSERT INTO occe_manufacturer_to_store  (manufacturer_id, store_id) VALUES ('" + manufacturerId.ToString() + "',' " + manufacturerId.ToString() + "); ");
+                        DadosMysql.Insert("INSERT INTO oc_manufacturer_to_store  (manufacturer_id, store_id) VALUES ('" + manufacturerId.ToString() + "',' " + manufacturerId.ToString() + "); ");
+                        //INSERT INTO `occe_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES (0001, 0)
+
+                        var Linha = "Novo Fabricante Store Adicionado: " + l_adDeptoRow["cod"].ToString() + " - " + l_adDeptoRow["sec"].ToString();
+                        tbProductStoreNovos.Rows.Add(Linha);
+                        this.Invoke((MethodInvoker)delegate ()
+                        {
+
+                            Lista.Items.Add(Linha);
+
+                        });
+                        //Thread.Sleep(1000);
+                        //      DadosMysql.Insert("INSERT INTO occe_category(`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES ('" + UlID.ToString() + "','catalog/DEPARTAMENTOS/DNW_HIGB_00.png','0','3','3','1','2017-12-11 19:48:07','2017-12-11 19:48:07'); ");
+
+                        // manufacturerId++;
+
+                    }
+                    total++;
+
+                    valorgeral = total.ToString();
+
+                }
+                #endregion
+
+                #region Altera Manufacturer
+
+
+                var TblMySqlFabricanteKeys = TblMySqlFabricante.Select().Select((r) => (string)r["manufactuer_id"]);
+                var l_FabricanteiguaisRows = TblPostrgres.Select().Where((r) => TblMySqlFabricanteKeys.Contains((string)r["barras"]));
+
+
+                //this.Invoke((MethodInvoker)delegate ()
+                //{
+                //    progressBar1.Maximum = l_iguaisRows.Count();
+                //});
+
+                //progressBar1.Minimum = 0;
+
+                DataTable tbDadosFabricantesEncontrados = new DataTable();
+                DataTable tbDadosFabricantesIguais = new DataTable();
+
+                total = 0;
+                valorgeral = total.ToString();
+                
+                foreach (var l_igualRow in l_FabricanteiguaisRows)
+                {
+
+                    descricao = l_igualRow["descricao"].ToString();
+                    ean = l_igualRow["barras"].ToString();
+                    valor = l_igualRow["preco"].ToString();
+                    quantidade = l_igualRow["quantidade"].ToString();
+
+                    //tbDadosFabricantesEncontrados = DadosMysql.RetornaDadosFabricante("SELECT * FROM occe_manufacturer where manufacturer_id = '" + ean + "' ");
+                    tbDadosFabricantesEncontrados = DadosMysql.RetornaDadosFabricante("SELECT * FROM oc_manufacturer where name = '" + ean + "' ");
+                    int Registros = 0;
+                    DataRow[] rows;
+
+                    rows = tbDadosFabricantesEncontrados.Select("manufacturer_id = '" + ean + "'");
+
+                    foreach (DataRow dr in rows)
+                    {
+                        Mdescricao = dr["manufacturer_id"].ToString();
+                        Mvalor = dr["name"].ToString();
+                        Mean = dr["image"].ToString();
+                        Mquantidade = dr["sort_order"].ToString();
+                    }
+
+                    Registros = rows.Length;
+                    string num = Registros.ToString();
+
+                    CultureInfo enUS = CultureInfo.CreateSpecificCulture("en-US");
+                    DateTimeFormatInfo dtfi = enUS.DateTimeFormat;
+                    dtfi.FullDateTimePattern = "yyyy-MM-dd 00:00:00";
+                    descricao = descricao.Replace("'", "");
+
+
+
+                    if (Registros > 0)
+                    {
+                        if (Mdescricao != descricao || Mvalor != valor || Mean != ean || Mquantidade != quantidade)
+                        {
+                            DadosMysql.CloseConnection();
+                            //DadosMysql.Insert("update occe_product set model = '" + descricao + "', quantity = '" + quantidade + "', date_modified = '" + dtfi + "' where ean =  '" + ean + "' ");
+                            DadosMysql.Insert("update occe_manufacturer set name = '" + descricao + "', image = '" + quantidade + "', sort_order = '" + dtfi + "' where name =  '" + ean + "' ");
+                            var Linha = "Fabricante Atualizado: " + ean + " - " + descricao + " ";
+                            tbDadosFabricantesIguais.Rows.Add(Linha);
+
+                            this.Invoke((MethodInvoker)delegate ()
+                            {
+
+                                Lista.Items.Add(Linha);
+
+                            });
+                        }
+                    }
+                    total++;
+                    valorgeral = total.ToString();
+
+
+                    //  progressBar1.Step = total;
+                }
+
+                #endregion
+
+                #region Altera Category Path
+
+
+                var TblMySqlCategoryPathKeys = TblMySqlCategoriaPath.Select().Select((r) => (string)r["category_id"]);
+                var l_CategoryPathIguaisRows = TblPostrgres.Select().Where((r) => TblMySqlFabricanteKeys.Contains((string)r["barras"]));
+
+
+                //this.Invoke((MethodInvoker)delegate ()
+                //{
+                //    progressBar1.Maximum = l_iguaisRows.Count();
+                //});
+
+                //progressBar1.Minimum = 0;
+
+                DataTable tbDadosCategoryPathEncontrados = new DataTable();
+                DataTable tbDadosCategoryPathIguais = new DataTable();
+
+                total = 0;
+                valorgeral = total.ToString();
+
+                foreach (var l_igualRow in l_CategoryPathIguaisRows)
+                {
+
+                    descricao = l_igualRow["descricao"].ToString();
+                    ean = l_igualRow["barras"].ToString();
+                    valor = l_igualRow["preco"].ToString();
+                    quantidade = l_igualRow["quantidade"].ToString();
+
+                    //tbDadosCategoryPathEncontrados = DadosMysql.RetornaDadosCategoryPath("SELECT * FROM occe_category_path where category_id = '" + ean + "' and path_id = '" + ean + "' ");
+                    tbDadosCategoryPathEncontrados = DadosMysql.RetornaDadosCategoryPath("SELECT * FROM oc_category_path where category_id = '" + ean + "' and path_id = '" + ean + "' ");
+                    int Registros = 0;
+                    DataRow[] rows;
+
+                    rows = tbDadosFabricantesEncontrados.Select("category_id = '" + ean + "' and path_id = '" + ean + "'");
+
+                    foreach (DataRow dr in rows)
+                    {
+                        Mdescricao = dr["category_id"].ToString();
+                        Mvalor = dr["path_id"].ToString();
+                    }
+
+                    Registros = rows.Length;
+                    string num = Registros.ToString();
+
+                    CultureInfo enUS = CultureInfo.CreateSpecificCulture("en-US");
+                    DateTimeFormatInfo dtfi = enUS.DateTimeFormat;
+                    dtfi.FullDateTimePattern = "yyyy-MM-dd 00:00:00";
+                    descricao = descricao.Replace("'", "");
+
+
+
+                    if (Registros > 0)
+                    {
+                        if (Mdescricao != descricao || Mvalor != valor || Mean != ean || Mquantidade != quantidade)
+                        {
+                            DadosMysql.CloseConnection();
+                            //DadosMysql.Insert("update occe_category_path set category_id = '" + descricao + "', path_id = '" + quantidade + "', level = '" + dtfi + "' where category_id =  '" + ean + "' ");
+                            DadosMysql.Insert("update oc_category_path set category_id = '" + descricao + "', path_id = '" + quantidade + "', level = '" + dtfi + "' where category_id =  '" + ean + "' ");
+                            var Linha = "Categoria Path Atualizado: " + ean + " - " + descricao + " ";
+                            tbDadosCategoryPathIguais.Rows.Add(Linha);
+
+                            this.Invoke((MethodInvoker)delegate ()
+                            {
+
+                                Lista.Items.Add(Linha);
+
+                            });
+                        }
+                    }
+                    total++;
+                    valorgeral = total.ToString();
+
+
+                    //  progressBar1.Step = total;
+                }
+
+                #endregion
+
 
                 ////////////// INSERINDO CATEGORIA ///////////////////////////////////////////////////////////////////////////////
 

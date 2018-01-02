@@ -99,7 +99,7 @@ namespace Integra.Opencart.Desktop
                 {
                     //lblHora.Text = DateTime.Now.AddHours(variavelHoraConvertida).ToString();
 
-                    lblHora.Text = DateTime.Now.AddHours(4).ToString();
+                    lblHora.Text = DateTime.Now.AddHours(5).ToString();
 
                 });
                 this.Invoke((MethodInvoker)delegate ()

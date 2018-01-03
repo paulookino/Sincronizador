@@ -29,10 +29,15 @@ namespace Intergra.Opencar.Web.DAL
         //Initialize values
         private void Initialize()
         {
-            server = "helofarma021.ddns.net";
-            database = "SIM_ADM";
+            server = "201.6.100.80";
+            database = "SIM_LIDER20170511";
             uid = "postgres";
-            password = "platinsiad";
+            password = "postgres";
+
+            //server = "helofarma021.ddns.net";
+            //database = "SIM_ADM";
+            //uid = "postgres";
+            //password = "platinsiad";
 
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "DATABASE=" + database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
@@ -209,6 +214,47 @@ namespace Intergra.Opencar.Web.DAL
                         DataRow row = dt.NewRow();
                         row["cod"] = dr["cod"].ToString();
                         row["sec"] = dr["sec"].ToString();
+                        dt.Rows.Add(row);
+                    }
+                    //close Data Reader
+                    dr.Close();
+
+                    //close Connection
+                    CloseConnection();
+                }
+
+                return dt;
+            }
+            else
+            {
+                return dt;
+            }
+        }
+
+
+        public DataTable RetornaDadosFabricante(string query)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("cod", typeof(string));
+            dt.Columns.Add("des", typeof(string));
+            dt.Columns.Add("upd", typeof(string));
+            dt.Columns.Add("atv", typeof(string));
+
+            //Open connection
+            if (OpenConnection() == true)
+            {
+                //Create Command
+                //  NpgsqlCommand cmd = new NpgsqlCommand(query, connection);
+                using (var command = new NpgsqlCommand(query, connection))
+                {
+                    var dr = command.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        DataRow row = dt.NewRow();
+                        row["cod"] = dr["cod"].ToString();
+                        row["des"] = dr["des"].ToString();
+                        row["upd"] = dr["upd"].ToString();
+                        row["atv"] = dr["atv"].ToString();
                         dt.Rows.Add(row);
                     }
                     //close Data Reader

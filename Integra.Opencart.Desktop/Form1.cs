@@ -83,9 +83,6 @@ namespace Integra.Opencart.Desktop
 
             try
             {
-
-                
-
                 DateTime dt = DateTime.Now;
 
                 dt.AddHours(5);
@@ -100,6 +97,7 @@ namespace Integra.Opencart.Desktop
                     lblHora.Text = DateTime.Now.AddHours(5).ToString();
 
                 });
+
                 this.Invoke((MethodInvoker)delegate ()
                 {
                     
@@ -156,7 +154,7 @@ namespace Integra.Opencart.Desktop
                 TblPostrgresDepto.Columns.Add("sec", typeof(string));
 
                 var TblPostrgresFabricante = new DataTable(); // postgres
-                TblPostrgresFabricante.Columns.Add("ide", typeof(string));
+                //TblPostrgresFabricante.Columns.Add("ide", typeof(string));
                 TblPostrgresFabricante.Columns.Add("cod", typeof(string));
                 TblPostrgresFabricante.Columns.Add("des", typeof(string));
                 TblPostrgresFabricante.Columns.Add("upd", typeof(string));
@@ -164,7 +162,7 @@ namespace Integra.Opencart.Desktop
 
 
                 var TblPostrgresCategoriaProduto = new DataTable(); // postgres
-                TblPostrgresCategoriaProduto.Columns.Add("ide", typeof(string));
+                //TblPostrgresCategoriaProduto.Columns.Add("ide", typeof(string));
                 TblPostrgresCategoriaProduto.Columns.Add("cod", typeof(string));
                 TblPostrgresCategoriaProduto.Columns.Add("des", typeof(string));
                 TblPostrgresCategoriaProduto.Columns.Add("tpo", typeof(string));
@@ -172,7 +170,7 @@ namespace Integra.Opencart.Desktop
 
 
                 var TblPostrgresCategoria = new DataTable(); // postgres
-                TblPostrgresCategoria.Columns.Add("ide", typeof(string));
+                //TblPostrgresCategoria.Columns.Add("ide", typeof(string));
                 TblPostrgresCategoria.Columns.Add("cod", typeof(string));
                 TblPostrgresCategoria.Columns.Add("des", typeof(string));
                 TblPostrgresCategoria.Columns.Add("sgl", typeof(string));
@@ -183,7 +181,7 @@ namespace Integra.Opencart.Desktop
 
 
                 var TblPostrgresLoja = new DataTable(); // postgres
-                TblPostrgresLoja.Columns.Add("ide", typeof(string));
+                //TblPostrgresLoja.Columns.Add("ide", typeof(string));
                 TblPostrgresLoja.Columns.Add("lot", typeof(string));
                 TblPostrgresLoja.Columns.Add("uad", typeof(string));
                 TblPostrgresLoja.Columns.Add("ope", typeof(string));
@@ -269,7 +267,7 @@ namespace Integra.Opencart.Desktop
                 //TblPMySql = DadosMysql.RetornaDados("SELECT * FROM occe_product  limit 10");
                 TblPMySql = DadosMysql.RetornaDados("SELECT * FROM oc_product  limit 10");
 
-                TblPostrgres = DadosPostgres.RetornaDados(" SELECT * from web.prd_cad where uad = 1 order by descricao limit 10");
+                TblPostrgres = DadosPostgres.RetornaDados("SELECT * from web.prd_cad where uad = 1 order by descricao limit 10");
 
                 TblPostrgresDepto = DadosPostgres.RetornaDadosDepto("select * from web.cad_sec  limit 10");
 
@@ -282,16 +280,13 @@ namespace Integra.Opencart.Desktop
 
                 //TblMySqlCategoriaPath = DadosMysql.RetornaDadosCategoryPath("SELECT * FROM occe_category_path limit 10");
                 TblMySqlCategoriaPath = DadosMysql.RetornaDadosCategoryPath("SELECT * FROM oc_category_path limit 10");
-
-
+                
                 //TblMySqlCategoriaLayout = DadosMysql.RetornaDadosCategoryLayout("SELECT * FROM occe_category_to_layout limit 10");
                 TblMySqlCategoriaLayout = DadosMysql.RetornaDadosCategoryLayout("SELECT * FROM oc_category_to_layout limit 10");
-
-
+                
                 //TblMySqlCategoriaStore = DadosMysql.RetornaDadosCategoryStore("SELECT * FROM occe_category_to_store limit 10");
                 TblMySqlCategoriaStore = DadosMysql.RetornaDadosCategoryStore("SELECT * FROM oc_category_to_store limit 10");
-
-
+                
                 //TblMySqlProductCategory = DadosMysql.RetornaDadosProductCategory("SELECT * FROM occe_product_to_category limit 10");
                 TblMySqlProductCategory = DadosMysql.RetornaDadosProductCategory("SELECT * FROM oc_product_to_category limit 10");
 
@@ -306,8 +301,7 @@ namespace Integra.Opencart.Desktop
 
                 //int UlIP = DadosMysql.RetornaMaxId("SELECT max(product_id) as product_id FROM occe_product");
                 int UlIP = DadosMysql.RetornaMaxId("SELECT max(product_id) as product_id FROM oc_product");
-
-
+                
                 //int manufacturerId = DadosMysql.RetornaMaxId("SELECT max(manufacturer_id) as manufacturer_id FROM occe_manufacturer");
                 int manufacturerId = DadosMysql.RetornaMaxId("SELECT max(manufacturer_id) as manufacturer_id FROM oc_manufacturer");
 
@@ -335,8 +329,7 @@ namespace Integra.Opencart.Desktop
                 int M = TblPMySql.Rows.Count;
                 int PD = TblPostrgresDepto.Rows.Count;
                 int MD = TblMySqlDepto.Rows.Count;
-
-
+                
                 var TblDeptoMySqlKeys = TblMySqlDepto.Select().Select((r) => (string)r["name"]);
                 var TblFabricanteMySqlKeys = TblMySqlFabricante.Select().Select((r) => (string)r["name"]);
                 var TblCategoriaPathMySqlKeys = TblMySqlCategoriaPath.Select().Select((r) => (string)r["category_id"]);
@@ -345,9 +338,7 @@ namespace Integra.Opencart.Desktop
                 var TblProductCategoryMySqlKeys = TblMySqlProductCategory.Select().Select((r) => (string)r["product_id"]);
                 var TblProductStoreMySqlKeys = TblMySqlProductStore.Select().Select((r) => (string)r["product_id"]);
                 var TblManufactureStoreMySqlKeys = TblMySqlManufactureStore.Select().Select((r) => (string)r["manufacturer_id"]);
-
-
-
+                
                 var l_adDeptoRows = TblPostrgresDepto.Select().Where((r) => !TblDeptoMySqlKeys.Contains((string)r["sec"]));
                 var l_adFabricanteRows = TblPostrgresDepto.Select().Where((r) => !TblFabricanteMySqlKeys.Contains((string)r["des"]));
                 var l_adCategoriaPathRows = TblMySqlCategoriaPath.Select().Where((r) => !TblCategoriaPathMySqlKeys.Contains((string)r["category_id"]));
@@ -392,9 +383,7 @@ namespace Integra.Opencart.Desktop
                     string num = Registros.ToString();
 
                     DadosMysql.CloseConnection();
-
-
-
+                    
                     if (Registros == 0)
                     {
                         // DadosMysql.CloseConnection();
@@ -429,12 +418,12 @@ namespace Integra.Opencart.Desktop
 
                 total = 0;
 
-                foreach (var l_adDeptoRow in l_adCategoriaPathRows)
+                foreach (var l_adCategoriaPathRow in l_adCategoriaPathRows)
                 {
 
-                    string categoryId = l_adDeptoRow["category_id"].ToString();
-                    string pathId = l_adDeptoRow["path_id"].ToString();
-                    string level = l_adDeptoRow["level"].ToString();
+                    string categoryId = l_adCategoriaPathRow["category_id"].ToString();
+                    string pathId = l_adCategoriaPathRow["path_id"].ToString();
+                    string level = l_adCategoriaPathRow["level"].ToString();
 
 
                     //tbCategoryPathEncontrados = DadosMysql.RetornaDadosCategoryPath("SELECT * FROM occe_category_path where category_id = '" + descricao + "' and path_id = '"+ descricao +"' ");
@@ -457,9 +446,7 @@ namespace Integra.Opencart.Desktop
                     string num = Registros.ToString();
 
                     DadosMysql.CloseConnection();
-
-
-
+                    
                     if (Registros == 0)
                     {
                         // DadosMysql.CloseConnection();
@@ -468,7 +455,7 @@ namespace Integra.Opencart.Desktop
                         DadosMysql.Insert("INSERT INTO oc_category_path (category_id, path_id, level) VALUES (1 , 2, 3); ");
 
                         //INSERT INTO `occe_category_path` (`category_id`, `path_id`, `level`) VALUES (5, 101, 0) (5, 102, 0)
-                        var Linha = "Novo Categoria Path Adicionado: " + l_adDeptoRow["category_id"].ToString() + " - " + l_adDeptoRow["path_id"].ToString();
+                        var Linha = "Novo Categoria Path Adicionado: " + l_adCategoriaPathRow["category_id"].ToString() + " - " + l_adCategoriaPathRow["path_id"].ToString();
                         tbCategoryPathNovos.Rows.Add(Linha);
                         this.Invoke((MethodInvoker)delegate ()
                         {
@@ -496,12 +483,12 @@ namespace Integra.Opencart.Desktop
 
                 total = 0;
 
-                foreach (var l_adDeptoRow in l_adCategoriaLayoutRows)
+                foreach (var l_adCategoriaLayoutRow in l_adCategoriaLayoutRows)
                 {
 
-                    string categoryId = l_adDeptoRow["category_Id"].ToString();
-                    string storeId = l_adDeptoRow["store_id"].ToString();
-                    string layoutId = l_adDeptoRow["layout_id"].ToString();
+                    string categoryId = l_adCategoriaLayoutRow["category_Id"].ToString();
+                    string storeId = l_adCategoriaLayoutRow["store_id"].ToString();
+                    string layoutId = l_adCategoriaLayoutRow["layout_id"].ToString();
 
                     //tbCategoryLayoutEncontrados = DadosMysql.RetornaDadosCategoryLayout("SELECT * FROM occe_category_to_layout where category_id = '" + descricao + "' and store_id = '" + descricao + "' and layout_id = '" + descricao + "' ");
                     tbCategoryLayoutEncontrados = DadosMysql.RetornaDadosCategoryLayout("SELECT * FROM oc_category_to_layout where category_id = '" + categoryId + "' and store_id = '" + storeId + "' and layout_id = '" + layoutId + "' ");
@@ -535,7 +522,7 @@ namespace Integra.Opencart.Desktop
                         
 
                         //INSERT INTO `occe_category_path` (`category_id`, `path_id`, `level`) VALUES (5, 101, 0) (5, 102, 0)
-                        var Linha = "Novo Categoria Layout Adicionado: " + l_adDeptoRow["category_id"].ToString() + " - " + l_adDeptoRow["store_id"].ToString();
+                        var Linha = "Novo Categoria Layout Adicionado: " + l_adCategoriaLayoutRow["category_id"].ToString() + " - " + l_adCategoriaLayoutRow["store_id"].ToString();
                         tbCategoryLayoutNovos.Rows.Add(Linha);
                         this.Invoke((MethodInvoker)delegate ()
                         {
@@ -563,11 +550,11 @@ namespace Integra.Opencart.Desktop
 
                 total = 0;
 
-                foreach (var l_adDeptoRow in l_adCategoriaStoreRows)
+                foreach (var l_adCategoriaStoreRow in l_adCategoriaStoreRows)
                 {
 
-                    string categoryId = l_adDeptoRow["category_id"].ToString();
-                    string storeId = l_adDeptoRow["store_id"].ToString();
+                    string categoryId = l_adCategoriaStoreRow["category_id"].ToString();
+                    string storeId = l_adCategoriaStoreRow["store_id"].ToString();
 
                     //tbCategoryStoreEncontrados = DadosMysql.RetornaDadosCategoryStore("SELECT * FROM occe_category_to_store where category_id = '" + descricao + "' and store_id = '" + descricao + "'");
                     tbCategoryStoreEncontrados = DadosMysql.RetornaDadosCategoryStore("SELECT * FROM oc_category_to_store where category_id = '" + categoryId + "' and store_id = '" + storeId + "'");
@@ -588,9 +575,7 @@ namespace Integra.Opencart.Desktop
                     string num = Registros.ToString();
 
                     DadosMysql.CloseConnection();
-
-
-
+                    
                     if (Registros == 0)
                     {
                         // DadosMysql.CloseConnection();
@@ -600,7 +585,7 @@ namespace Integra.Opencart.Desktop
 
                         //INSERT INTO `occe_category_to_store` (`category_id`, `store_id`) VALUES (5, 0)  
                         
-                        var Linha = "Novo Categoria Store Adicionado: " + l_adDeptoRow["category_id"].ToString() + " - " + l_adDeptoRow["store_id"].ToString();
+                        var Linha = "Novo Categoria Store Adicionado: " + l_adCategoriaStoreRow["category_id"].ToString() + " - " + l_adCategoriaStoreRow["store_id"].ToString();
                         tbCategoryStoretNovos.Rows.Add(Linha);
                         this.Invoke((MethodInvoker)delegate ()
                         {
@@ -628,11 +613,11 @@ namespace Integra.Opencart.Desktop
 
                 total = 0;
 
-                foreach (var l_adDeptoRow in l_adProductCategoryRows)
+                foreach (var l_adProductCategoryRow in l_adProductCategoryRows)
                 {
 
-                    string productId = l_adDeptoRow["product_id"].ToString();
-                    string categoryId = l_adDeptoRow["category_id"].ToString();
+                    string productId = l_adProductCategoryRow["product_id"].ToString();
+                    string categoryId = l_adProductCategoryRow["category_id"].ToString();
                     
                     //tbProductCategoryEncontrados = DadosMysql.RetornaDadosProductCategory("SELECT * FROM occe_product_to_category where product_id = '" + descricao + "' and category_id = '" + descricao + "'");
                     tbProductCategoryEncontrados = DadosMysql.RetornaDadosProductCategory("SELECT * FROM oc_product_to_category where product_id = '" + productId + "' and category_id = '" + categoryId + "'");
@@ -665,7 +650,7 @@ namespace Integra.Opencart.Desktop
                         //INSERT INTO `occe_product_to_category` (`product_id`, `category_id`) VALUES (101, 5)
                         
 
-                        var Linha = "Novo Produto Categoria Adicionado: " + l_adDeptoRow["product_id"].ToString() + " - " + l_adDeptoRow["category_id"].ToString();
+                        var Linha = "Novo Produto Categoria Adicionado: " + l_adProductCategoryRow["product_id"].ToString() + " - " + l_adProductCategoryRow["category_id"].ToString();
                         tbProductCategoryNovos.Rows.Add(Linha);
                         this.Invoke((MethodInvoker)delegate ()
                         {
@@ -693,11 +678,11 @@ namespace Integra.Opencart.Desktop
 
                 total = 0;
 
-                foreach (var l_adDeptoRow in l_adProductStoreRows)
+                foreach (var l_adProductStoreRow in l_adProductStoreRows)
                 {
 
-                    string productId = l_adDeptoRow["product_id"].ToString();
-                    string storeId = l_adDeptoRow["store_id"].ToString();
+                    string productId = l_adProductStoreRow["product_id"].ToString();
+                    string storeId = l_adProductStoreRow["store_id"].ToString();
                     
 
                     //tbProductStoreEncontrados = DadosMysql.RetornaDadosProductStore("SELECT * FROM occe_product_to_store where product_id = '" + descricao + "' and store_id = '" + descricao + "'");
@@ -719,9 +704,7 @@ namespace Integra.Opencart.Desktop
                     string num = Registros.ToString();
 
                     DadosMysql.CloseConnection();
-
-
-
+                    
                     if (Registros == 0)
                     {
                         // DadosMysql.CloseConnection();
@@ -730,7 +713,7 @@ namespace Integra.Opencart.Desktop
                         DadosMysql.Insert("INSERT INTO oc_product_to_store  (product_id, store_id) VALUES (1, 2); ");
                         //INSERT INTO `occe_product_to_store` (`product_id`, `store_id`) VALUES (101, 0)
 
-                        var Linha = "Novo Produto Store Adicionado: " + l_adDeptoRow["product_id"].ToString() + " - " + l_adDeptoRow["store_id"].ToString();
+                        var Linha = "Novo Produto Store Adicionado: " + l_adProductStoreRow["product_id"].ToString() + " - " + l_adProductStoreRow["store_id"].ToString();
                         tbProductStoreNovos.Rows.Add(Linha);
                         this.Invoke((MethodInvoker)delegate ()
                         {
@@ -758,11 +741,11 @@ namespace Integra.Opencart.Desktop
 
                 total = 0;
 
-                foreach (var l_adDeptoRow in l_adManufacturerStoreRows)
+                foreach (var l_adManufacturerStoreRow in l_adManufacturerStoreRows)
                 {
 
-                    string manufacturerIdRow = l_adDeptoRow["manufacturer_id"].ToString();
-                    string storeId = l_adDeptoRow["store_id"].ToString();
+                    string manufacturerIdRow = l_adManufacturerStoreRow["manufacturer_id"].ToString();
+                    string storeId = l_adManufacturerStoreRow["store_id"].ToString();
 
                     //tbManufacturerStoreEncontrados = DadosMysql.RetornaDadosManufacturerStore("SELECT * FROM occe_manufacturer_to_store where manufacturer_id = '" + descricao + "' and store_id = '" + descricao + "'");
                     tbManufacturerStoreEncontrados = DadosMysql.RetornaDadosManufacturerStore("SELECT * FROM oc_manufacturer_to_store where manufacturer_id = '" + manufacturerIdRow + "' and store_id = '" + storeId + "'");
@@ -783,9 +766,7 @@ namespace Integra.Opencart.Desktop
                     string num = Registros.ToString();
 
                     DadosMysql.CloseConnection();
-
-
-
+                    
                     if (Registros == 0)
                     {
                         // DadosMysql.CloseConnection();
@@ -794,7 +775,7 @@ namespace Integra.Opencart.Desktop
                         DadosMysql.Insert("INSERT INTO oc_manufacturer_to_store  (manufacturer_id, store_id) VALUES (1, 2); ");
                         //INSERT INTO `occe_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES (0001, 0)
 
-                        var Linha = "Novo Fabricante Store Adicionado: " + l_adDeptoRow["manufacturer_id"].ToString() + " - " + l_adDeptoRow["store_id"].ToString();
+                        var Linha = "Novo Fabricante Store Adicionado: " + l_adManufacturerStoreRow["manufacturer_id"].ToString() + " - " + l_adManufacturerStoreRow["store_id"].ToString();
                         tbProductStoreNovos.Rows.Add(Linha);
                         this.Invoke((MethodInvoker)delegate ()
                         {
@@ -835,13 +816,13 @@ namespace Integra.Opencart.Desktop
                 total = 0;
                 valorgeral = total.ToString();
                 
-                foreach (var l_igualRow in l_FabricanteiguaisRows)
+                foreach (var l_FabricanteiguaisRow in l_FabricanteiguaisRows)
                 {
 
-                    descricao = l_igualRow["des"].ToString();
-                    ean = l_igualRow["cod"].ToString();
-                    valor = l_igualRow["preco"].ToString();
-                    quantidade = l_igualRow["quantidade"].ToString();
+                    descricao = l_FabricanteiguaisRow["des"].ToString();
+                    ean = l_FabricanteiguaisRow["cod"].ToString();
+                    valor = l_FabricanteiguaisRow["preco"].ToString();
+                    quantidade = l_FabricanteiguaisRow["quantidade"].ToString();
 
                     //tbDadosFabricantesEncontrados = DadosMysql.RetornaDadosFabricante("SELECT * FROM occe_manufacturer where manufacturer_id = '" + ean + "' ");
                     tbDadosFabricantesEncontrados = DadosMysql.RetornaDadosFabricante("SELECT * FROM oc_manufacturer where name = '" + descricao + "' ");
@@ -863,9 +844,7 @@ namespace Integra.Opencart.Desktop
                     DateTimeFormatInfo dtfi = enUS.DateTimeFormat;
                     dtfi.FullDateTimePattern = "yyyy-MM-dd 00:00:00";
                     descricao = descricao.Replace("'", "");
-
-
-
+                    
                     if (Registros > 0)
                     {
                         if (Mdescricao != descricao || Mean != ean )
@@ -1048,6 +1027,7 @@ namespace Integra.Opencart.Desktop
 
                 });
                 #region Inseri Departamento 2
+
                 var TblDeptoMySqlKeys2 = TblMySqlDepto.Select().Select((r) => (string)r["category_id"]);
                 var l_adDeptoRows2 = TblMySqlDepto.Select().Select((r) => !TblDeptoMySqlKeys.Contains((string)r["sec"]));
 
